@@ -1,8 +1,8 @@
 
 //pipeline {
      //agent { docker { image 'node:13.8'} }
-agent any
-	 stages {
+	 agent any
+     stages {
 		stage('Build') {
 			steps {	
 				//sh 'node --version'
