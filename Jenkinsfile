@@ -1,7 +1,7 @@
 
 //pipeline {
      //agent { docker { image 'node:13.8'} }
-agent any {
+//agent any 
      stages {
 		stage('Build') {
 			steps {	
@@ -27,5 +27,4 @@ agent any {
 		}
 		
 	}
-}
 
