@@ -1,23 +1,17 @@
 
-
+pipeline {
      //agent { docker { image 'node:13.8'} }
-tools {
-    maven 'M3'
-  }
-	// agent any 
-	// environment {
-	// 	dockerHome = tool 'myDocker'
-	// 	mavenHome = tool 'myMaven'
-	// 	PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
-	// }
-
+	agent any 
+	environment {
+		dockerHome = tool 'myDocker'
+		mavenHome = tool 'myMaven'
+		PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
+	}
      stages {
-		stag('init') {
-			Checkout scm
-		}
 		stage('Checkout') {
 			steps {	
-				sh 'mvn --version'
+				container ('maven'){
+				sh 'mvn --version'}
 				sh 'docker version'
 				echo "Build"
 				echo "$PATH"
@@ -30,17 +24,20 @@ tools {
 		}
 		stage('Compile') {
 			steps {	
-				sh "mvn clean compile"
+				container ('maven'){
+				sh "mvn clean compile"}
 			}
 		}
 		stage('Test') {
 			steps {	
-				sh "mvn test"
+				container ('maven'){
+				sh "mvn test"}
 			}
 		}
 		stage('Integration Test') {
 			steps {	
-				sh "mvn  failsafe:integration-test failsafe:verify"
+				container ('maven'){
+				sh "mvn  failsafe:integration-test failsafe:verify"}
 			}
 		}
 		
