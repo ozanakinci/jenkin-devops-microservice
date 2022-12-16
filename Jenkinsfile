@@ -10,7 +10,7 @@ pipeline {
      stages {
 		stage('Checkout') {
 			steps {	
-				container ('maven'){
+				container ('myMaven'){
 				sh 'mvn --version'}
 				sh 'docker version'
 				echo "Build"
@@ -24,19 +24,19 @@ pipeline {
 		}
 		stage('Compile') {
 			steps {	
-				container ('maven'){
+				container ('myMaven'){
 				sh "mvn clean compile"}
 			}
 		}
 		stage('Test') {
 			steps {	
-				container ('maven'){
+				container ('myMaven'){
 				sh "mvn test"}
 			}
 		}
 		stage('Integration Test') {
 			steps {	
-				container ('maven'){
+				container ('myMaven'){
 				sh "mvn  failsafe:integration-test failsafe:verify"}
 			}
 		}
