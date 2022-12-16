@@ -1,13 +1,20 @@
 
-pipeline {
+
      //agent { docker { image 'node:13.8'} }
-	agent any 
-	environment {
-		dockerHome = tool 'myDocker'
-		mavenHome = tool 'myMaven'
-		PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
-	}
+tools {
+    maven 'M3'
+  }
+	// agent any 
+	// environment {
+	// 	dockerHome = tool 'myDocker'
+	// 	mavenHome = tool 'myMaven'
+	// 	PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
+	// }
+
      stages {
+		stag('init') {
+			Checkout scm
+		}
 		stage('Checkout') {
 			steps {	
 				sh 'mvn --version'
