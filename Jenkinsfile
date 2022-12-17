@@ -1,13 +1,17 @@
 
 pipeline {
     //agent { docker { image 'node:13.8'} }
-	agent { docker { image 'maven:3.6.3'} }
+	//agent { docker { image 'maven:3.6.3'} }
 	agent any 
-	environment {
-		dockerHome = tool 'myDocker'
-		mavenHome = tool 'myMaven'
-		PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
-	}
+	// environment {
+	// 	dockerHome = tool 'myDocker'
+	// 	mavenHome = tool 'myMaven'
+	// 	PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
+	// }
+	 tools {
+        maven 'Maven 3.8.6'
+        jdk 'Java 17.0.4.1'
+    }
      stages {
 		stage('Checkout') {
 			steps {	
@@ -22,26 +26,26 @@ pipeline {
 				echo "BUILD_URL - $env.BUILD_URL"
 			}
 		}
-		stage('Compile') {
-			steps {
-				sh "mvn clean compile"
-			}
-		}
-		stage('Test') {
-			steps {	
-				sh "mvn test"
-			}
-		}
-		stage('Integration Test') {
-			steps {	
-				sh "mvn  failsafe:integration-test failsafe:verify"
-			}
-		}
-		stage('Package') {
-			steps {	
-				sh "mvn package -DskipTests"
-			}
-		}
+		// stage('Compile') {
+		// 	steps {
+		// 		sh "mvn clean compile"
+		// 	}
+		// }
+		// stage('Test') {
+		// 	steps {	
+		// 		sh "mvn test"
+		// 	}
+		// }
+		// stage('Integration Test') {
+		// 	steps {	
+		// 		sh "mvn  failsafe:integration-test failsafe:verify"
+		// 	}
+		// }
+		// stage('Package') {
+		// 	steps {	
+		// 		sh "mvn package -DskipTests"
+		// 	}
+		// }
 		// stage('Build Docker Image') {
 		// 	steps {	
 		// 		//docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG
