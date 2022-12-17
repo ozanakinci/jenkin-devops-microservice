@@ -23,22 +23,22 @@ pipeline {
 		}
 		stage('Compile') {
 			steps {	
-				sh "docker clean compile"
+				sh "docker version clean compile"
 			}
 		}
 		stage('Test') {
 			steps {	
-				sh "docker test"
+				sh "docker version test"
 			}
 		}
 		stage('Integration Test') {
 			steps {	
-				sh "docker  failsafe:integration-test failsafe:verify"
+				sh "docker version failsafe:integration-test failsafe:verify"
 			}
 		}
 		stage('Package') {
 			steps {	
-				sh "docker package -DskipTests"
+				sh "docker version package -DskipTests"
 			}
 		}
 		stage('Build Docker Image') {
