@@ -1,6 +1,7 @@
 
 pipeline {
     //agent { docker { image 'node:13.8'} }
+	//agent { docker { image 'maven:3..6.3'} }
 	agent any 
 	environment {
 		dockerHome = tool 'myDocker'
@@ -41,24 +42,24 @@ pipeline {
 				sh "mvn package -DskipTests"
 			}
 		}
-		stage('Build Docker Image') {
-			steps {	
-				//docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG
-				script {
-					docker.build("docker build -t ozanakinci/repotest:tagname:$env.BUILD_TAG")
-				}
-			}
-		}
-		stage('Push Docker Image') {
-			steps {	
-				script {
-					docker.withRegistry('', 'dockerhub'){
-						docker.Image.push();
-						docker.Image.push('latest');
-				}
-			  }
-			}
-		}
+		// stage('Build Docker Image') {
+		// 	steps {	
+		// 		//docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG
+		// 		script {
+		// 			docker.build("docker build -t ozanakinci/repotest:tagname:$env.BUILD_TAG")
+		// 		}
+		// 	}
+		// }
+		// stage('Push Docker Image') {
+		// 	steps {	
+		// 		script {
+		// 			docker.withRegistry('', 'dockerhub'){
+		// 				docker.Image.push();
+		// 				docker.Image.push('latest');
+		// 		}
+		// 	  }
+		// 	}
+		// }
 		
 	}
 
