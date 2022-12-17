@@ -3,11 +3,11 @@ pipeline {
     //agent { docker { image 'node:13.8'} }
 	//agent { docker { image 'maven:3.6.3'} }
 	agent any 
-	// environment {
-	// 	dockerHome = tool 'myDocker'
-	// 	mavenHome = tool 'myMaven'
-	// 	PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
-	// }
+	environment {
+		dockerHome = tool 'myDocker'
+		mavenHome = tool 'myMaven'
+		PATH = "$dockerHome/bin:mavenHome/bin:$PATH"
+	}
 	 tools {
         maven 'Maven 3.8.6'
         jdk 'Java 17.0.4.1'
