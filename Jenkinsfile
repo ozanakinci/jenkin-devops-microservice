@@ -22,11 +22,10 @@ pipeline {
 			}
 		}
 		stage('Compile') {
-		steps{
-			withMaven(maven: 'mvn') {
+			steps {
 				sh "mvn clean compile"
 			}
-		}}
+		}
 		stage('Test') {
 			steps {	
 				sh "mvn test"
