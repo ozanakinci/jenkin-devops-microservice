@@ -21,11 +21,15 @@ pipeline {
 				echo "BUILD_URL - $env.BUILD_URL"
 			}
 		}
+		stage('init'){
+
+		}
 		stage('Compile') {
 			steps {
+				withMaven(maven: 'mvn'){
 				sh "mvn clean compile"
 			}
-		}
+		}}
 		stage('Test') {
 			steps {	
 				sh "mvn test"
