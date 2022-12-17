@@ -10,8 +10,7 @@ pipeline {
      stages {
 		stage('Checkout') {
 			steps {	
-				container ('myMaven'){
-				sh 'mvn --version'}
+				sh 'mvn --version'
 				sh 'docker version'
 				echo "Build"
 				echo "$PATH"
@@ -24,20 +23,40 @@ pipeline {
 		}
 		stage('Compile') {
 			steps {	
-				container ('myMaven'){
-				sh "mvn clean compile"}
+				sh "mvn clean compile"
 			}
 		}
 		stage('Test') {
 			steps {	
-				container ('myMaven'){
-				sh "mvn test"}
+				sh "mvn test"
 			}
 		}
 		stage('Integration Test') {
 			steps {	
-				container ('myMaven'){
-				sh "mvn  failsafe:integration-test failsafe:verify"}
+				sh "mvn  failsafe:integration-test failsafe:verify"
+			}
+		}
+		stage('Package') {
+			steps {	
+				sh "mvn package -DskipTests"
+			}
+		}
+		stage('Build Docker Image') {
+			steps {	
+				//docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG
+				script {
+					docker.build("docker build -t ozanakinci/repotest:tagname:$env.BUILD_TAG")
+				}
+			}
+		}
+		stage('Push Docker Image') {
+			steps {	
+				script {
+					docker.withRegistry('', 'dockerhub'){
+						docker.Image.push();
+						docker.Image.push('latest');
+				}
+			  }
 			}
 		}
 		
